@@ -1,0 +1,5 @@
+{
+    "dbIp": "localhost",
+    "dbName": "test",
+    "dbPoolSize": 5
+}
