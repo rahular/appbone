@@ -1,0 +1,49 @@
+<html ng-app="signup">
+
+<head>
+    <title>App Bone - Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-notify/dist/angular-notify.min.css" />
+</head>
+
+<body ng-controller="SignupController">
+    <div class="container">
+        <h2>App Bone - Sign Up</h2>
+        <form ng-submit="submit()">
+            <div class="form-group">
+                <label for="fname">First name:</label>
+                <input class="form-control" ng-model="details.firstName" id="firstName" required autofocus />
+            </div>
+            <div class="form-group">
+                <label for="lname">Last name:</label>
+                <input class="form-control" ng-model="details.lastName" id="lastName" required />
+            </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" ng-model="details.email" id="email" required />
+            </div>
+            <div class="form-group">
+                <label for="pwd">
+                    Password:
+                    <span ng-if="!checkStrength()" style="color:gray">Password must contain atleast 6 characters</span></label>
+                <input type="password" ng-change="checkStrength()" class="form-control" ng-model="details.password" id="password" required />
+            </div>
+            <div class="form-group">
+                <label for="pwd">
+                    Confirm Password:
+                    <span ng-if="validatePassword()" class="glyphicon glyphicon-ok"></span>
+                    <span ng-if="!validatePassword()" class="glyphicon glyphicon-remove"></span>
+                </label>
+                <input type="password" ng-change="validatePassword()" class="form-control" ng-model="details.cPassword" id="cPassword" required />
+            </div>
+            <button class="btn btn-lg btn-success" type="submit" ng-disabled="!checkStrength() || !validatePassword()" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-notify/dist/angular-notify.min.js"></script>
+    <script type="text/javascript" src="modules/signup/signup.js"></script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@ function create(firstName, lastName, email, password) {
         entity.read('users', {
             email: email
         }).then(function(rows) {
-            if (rows > 0) {
+            if (rows.length > 0) {
                 reject(new Error('User with email already exists'));
             } else {
                 entity.insert('users', {
@@ -17,11 +17,11 @@ function create(firstName, lastName, email, password) {
                     password: bcrypt.hashSync(password)
                 }).then(function(data) {
                     resolve(data);
-                }).error(function(err) {
+                }).catch(function(err) {
                     reject(new Error('Error writing to DB'));
                 });
             }
-        }).error(function(err) {
+        }).catch(function(err) {
             reject(new Error('Error reading from DB'));
         });
     });
@@ -33,7 +33,7 @@ function find(email) {
             email: email
         }).then(function(rows) {
             resolve(rows[0]);
-        }).error(function(err) {
+        }).catch(function(err) {
             reject(new Error('Error reading from DB'))
         });
     });
@@ -49,7 +49,7 @@ function update(firstName, lastName, email, password) {
             password: bcrypt.hashSync(password)
         }).then(function(data) {
             resolve(data);
-        }).error(function(err) {
+        }).catch(function(err) {
             reject(new Error('Error writing to DB'));
         });
     });
@@ -61,7 +61,7 @@ function remove(email) {
             email: email
         }).then(function(data) {
             resolve(data);
-        }).error(function(err) {
+        }).catch(function(err) {
             reject(new Error('Error removing from the DB'));
         });
     });
@@ -83,7 +83,7 @@ var user = {
         } else {
             create(body.firstName, body.lastName, body.email, body.password).then(function(data) {
                 res.json(data);
-            }).error(function(err) {
+            }).catch(function(err) {
                 console.log(err);
                 next(err);
             });
@@ -98,7 +98,7 @@ var user = {
         } else {
             find(body.email, body.password).then(function(data) {
                 res.json(data);
-            }).error(function(err) {
+            }).catch(function(err) {
                 console.log(err);
                 next(err);
             });
@@ -119,7 +119,7 @@ var user = {
         } else {
             update(body.firstName, body.lastName, body.email, body.password).then(function(data) {
                 res.json(data);
-            }).error(function(err) {
+            }).catch(function(err) {
                 console.log(err);
                 next(err);
             });
@@ -134,7 +134,7 @@ var user = {
         } else {
             remove(body.email).then(function(data) {
                 res.json(data);
-            }).error(function(err) {
+            }).catch(function(err) {
                 console.log(err);
                 next(err);
             });
