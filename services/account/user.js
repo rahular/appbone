@@ -89,6 +89,7 @@ var user = {
             });
         }
     },
+    findOne: find,
     find: function(req, res, next) {
         var body = req.query;
         if (!body) {
@@ -96,7 +97,7 @@ var user = {
         } else if (!body.email || body.email === '') {
             next(new Error('Missing requires params: email'));
         } else {
-            find(body.email, body.password).then(function(data) {
+            find(body.email).then(function(data) {
                 res.json(data);
             }).catch(function(err) {
                 console.log(err);
