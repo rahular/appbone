@@ -8,17 +8,15 @@ var mongoUrl = 'mongodb://' + config.dbIp + '/' + config.dbName + '?w=1';
 
 var db = null;
 var options = {
-    server: {
-        poolSize: config.dbPoolSize
-    }
+    poolSize: config.dbPoolSize
 };
 
 function initPool(callback) {
-    MongoClient.connect(mongoUrl, options, function(err, dbObj) {
+    MongoClient.connect(mongoUrl, options, function (err, client) {
         if (err) {
             callback(err, null);
-        } else if (callback && typeof(callback) == 'function') {
-            db = dbObj;
+        } else if (callback && typeof (callback) == 'function') {
+            dbObj = client.db(config.dbName);
             callback(null, dbObj);
         }
     });
